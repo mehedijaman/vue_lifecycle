@@ -1,78 +1,79 @@
 <script setup>
 import { onBeforeMount,onMounted, onBeforeUnmount, ref } from 'vue';
 
-  let pieChart = null
-  let doughnutChart = null
+let pieChart = null
+let doughnutChart = null
 
-  // chart data
-  const data = {
-    labels: [
-      'Red',
-      'Green',
-      'Blue'
-    ],
-    datasets: [{
-      data: [30, 40, 30],
-      backgroundColor: [
-        'red',
-        'green',
-        'blue'
-      ] ,
-      hoverOffset: 4
-    }]
-  };
+// chart data
+const data = {
+  labels: [
+    'Red',
+    'Green',
+    'Blue'
+  ],
+  datasets: [{
+    data: [30, 40, 30],
+    backgroundColor: [
+      'red',
+      'green',
+      'blue'
+    ] ,
+    hoverOffset: 4
+  }]
+};
 
-  // Pie chart configuration
-  const pieConfig = {
-    type: 'pie',
-    data: data,
-    options: {
-      responsive: true
-    }
-  };
-
-  // Doughnut chart configuration
-  const doughnutConfig = {
-    type: 'doughnut',
-    data: data,
-    options: {
-      responsive: true
-    }
-  };
-
-  onBeforeMount(() => {
-    console.log("Before Mounted")
-  })
-
-  onMounted(() => {
-    // Get a reference to the canvas element
-    const pieCtx = document.getElementById('myPieChart').getContext('2d');
-    const doughnutCtx = document.getElementById('myDoughnutChart').getContext('2d');
-
-    // Create the pie chart
-    pieChart = new Chart(pieCtx, pieConfig);
-    doughnutChart = new Chart(doughnutCtx, doughnutConfig);
-  })
-
-  onBeforeUnmount(() => {
-    data.labes = []
-    data.datasets = []
-  })
-
-  const colorName = ref('')
-  const colorParcent = ref('')
-
-  function updateChart(){
-    data.labels.push(colorName.value)
-    data.datasets[0].data.push(colorParcent.value)
-    data.datasets[0].backgroundColor.push(colorName.value.toLowerCase())
-
-    pieChart.update()
-    doughnutChart.update()
+// Pie chart configuration
+const pieConfig = {
+  type: 'pie',
+  data: data,
+  options: {
+    responsive: true
   }
+};
+
+// Doughnut chart configuration
+const doughnutConfig = {
+  type: 'doughnut',
+  data: data,
+  options: {
+    responsive: true
+  }
+};
+
+onBeforeMount(() => {
+  console.log("Before Mounted")
+})
+
+onMounted(() => {
+  // Get a reference to the canvas element
+  const pieCtx = document.getElementById('myPieChart').getContext('2d');
+  const doughnutCtx = document.getElementById('myDoughnutChart').getContext('2d');
+
+  // Create the pie chart
+  pieChart = new Chart(pieCtx, pieConfig);
+  doughnutChart = new Chart(doughnutCtx, doughnutConfig);
+})
+
+onBeforeUnmount(() => {
+  data.labes = []
+  data.datasets = []
+})
+
+const colorName = ref('')
+const colorParcent = ref('')
+
+function updateChart(){
+  data.labels.push(colorName.value)
+  data.datasets[0].data.push(colorParcent.value)
+  data.datasets[0].backgroundColor.push(colorName.value.toLowerCase())
+
+  pieChart.update()
+  doughnutChart.update()
+}
 </script>
 
 <template>
+
   <div class="grid grid-cols-2 gap-6">
     <div class="w-2/3">
       <h1 class="text-2xl text-gray-900 text-center">Pie Chart</h1>
