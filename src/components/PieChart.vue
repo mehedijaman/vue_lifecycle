@@ -55,8 +55,9 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  data.labes = []
-  data.datasets = []
+  pieChart.destroy()
+  doughnutChart.destroy()
+  console.log("Before Unmounted all data cleanup done")
 })
 
 const colorName = ref('')
